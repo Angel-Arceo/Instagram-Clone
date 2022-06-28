@@ -1,13 +1,18 @@
-const express = require('express')
-const app = express()
+const express = require('express');
+const { connect } = require('./mongo.js');
+const dotenv = require('dotenv');
 
-app.use(express.json())
+const app = express();
+dotenv.config()
+
+app.use(express.json());
 
 app.get('/', (request, response) => {
-    response.send('Hello World')
+    response.send('Hello World');
 })
 
-const PORT = 3001
+const PORT = 3001;
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`)
+    connect();
+    console.log(`Server is running on port ${PORT}`);
 })
