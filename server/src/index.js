@@ -1,19 +1,20 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
-const { fileUpload }= require('express-fileupload');
 const { connect } = require('./services/dbConnect.js');
+
+//routes
+const userRoute = require('./routes/users.js');
+
 
 const app = express();
 dotenv.config()
 
+//middleware
 app.use(express.json());
-app.use(fileUpload())
-app.use(cors())
+app.use(cors());
 
-app.get('/', (request, response) => {
-    response.send('Hello World');
-})
+app.use('/api/users', userRoute);
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
