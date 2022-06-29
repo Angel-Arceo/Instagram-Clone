@@ -1,11 +1,15 @@
 const express = require('express');
-const { connect } = require('./mongo.js');
 const dotenv = require('dotenv');
+const cors = require('cors');
+const { fileUpload }= require('express-fileupload');
+const { connect } = require('./services/dbConnect.js');
 
 const app = express();
 dotenv.config()
 
 app.use(express.json());
+app.use(fileUpload())
+app.use(cors())
 
 app.get('/', (request, response) => {
     response.send('Hello World');
