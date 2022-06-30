@@ -1,17 +1,17 @@
 const User = require('../models/users.js');
 const bcrypt = require('bcrypt');
 
-const getUsers = async (request, response) => {
+const getUsers = async (request, response, next) => {
     try {
         const users = await User.find({})
 
         response.status(200).json(users);
     }catch(e) {
-        console.log(e)
+        next(e)
     }
 }
 
-const getUser = async (request, response) => {
+const getUser = async (request, response, next) => {
     const userId = request.params.id
 
     try {
@@ -19,11 +19,11 @@ const getUser = async (request, response) => {
 
         response.status(200).json(user)
     }catch(e) {
-        console.log(e)
+        next(e)
     }
 }
 
-const register = async (request, response) => {
+const register = async (request, response, next) => {
     const { profile, username, name, password, followers, following, posts } = request.body;
 
     try {
@@ -44,11 +44,11 @@ const register = async (request, response) => {
 
         response.status(201).json(savedUser)
     }catch(e) {
-        console.log(e)
+        next(e);
     }
 }
 
-const deleteUser = async (request, response) => {
+const deleteUser = async (request, response, next) => {
     const userId = request.params.id;
 
     try {
@@ -56,7 +56,7 @@ const deleteUser = async (request, response) => {
 
         response.status(200).send('User has been sucessfully deleted');
     }catch(e) {
-        console.log(e);
+        next(e);
     }
 }
 
