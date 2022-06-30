@@ -48,9 +48,9 @@ const editPost = async (request, response, next) => {
     const postId = request.params.id;
 
     try {
-        const updatedHotel = await Post.findByIdAndUpdate(postId, { $set: request.body }, { new: true });
+        const updatedPost = await Post.findByIdAndUpdate(postId, { $set: request.body }, { new: true });
         
-        response.status(200).json(updatedHotel);
+        response.status(200).json(updatedPost);
     }catch(e) {
         next(e)
     }

@@ -6,6 +6,7 @@ const { connect } = require('./services/dbConnect.js');
 //routes
 const userRoute = require('./routes/users.js');
 const postRoute = require('./routes/posts.js');
+const commentsRoute = require('./routes/comments.js');
 
 
 const app = express();
@@ -17,6 +18,7 @@ app.use(cors());
 
 app.use('/api/users', userRoute);
 app.use('/api/posts', postRoute);
+app.use('/api/comments', commentsRoute);
 
 
 //to handle errors
