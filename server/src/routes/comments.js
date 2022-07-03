@@ -4,7 +4,7 @@ const router = express.Router();
 
 router.get('/', getComments);
 router.post('/', newComment);
-router.put('/edit/:id', editComment)
-router.delete('/delete/:id', deleteComment);
+router.put('/:id', editComment)
+router.delete('/:id', deleteComment);
 
 module.exports = router

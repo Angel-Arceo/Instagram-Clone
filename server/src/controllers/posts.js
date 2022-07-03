@@ -1,8 +1,10 @@
 const Post = require('../models/posts.js');
+const User = require('../models/users.js')
+const { createError } = require('../services/createError.js');
 
 const getPosts = async (request, response, next) => {
     try {
-        const posts = await Post.find({})
+        const posts = await Post.find({}).populate('user', { username: 1, profile: 1 }).populate('comments', { post: 0 })
 
         response.status(200).json(posts)
     }catch(e){
@@ -14,7 +16,7 @@ const getPost = async (request, response, next) => {
     const postId = request.params.id
 
     try {
-        const post = await Post.findById(postId);
+        const post = await Post.findById(postId).populate('user', { username: 1, profile: 1 }).populate('comments', { post: 0 });
 
         response.status(200).json(post)
     }catch(e) {
@@ -25,18 +27,29 @@ const getPost = async (request, response, next) => {
 const newPost = async (request, response, next) => {
     const { photo, title, content, likes, user, comments } = request.body;
 
+    const userId = await User.findById(user)
+
+    if(!userId) {
+        return next(createError(404, 'User not found'));
+    }else if(!content) {
+        return next(createError(204, 'No content'))
+    }
+
+    const post = new Post({
+        photo,
+        title,
+        content, 
+        likes,
+        user: userId._id,
+        comments
+    })
+
     try {
 
-        const post = new Post({
-            photo,
-            title,
-            content, 
-            likes,
-            user,
-            comments
-        })
-
         const savedPost = await post.save();
+
+        userId.posts = userId.posts.concat(savedPost._id);
+        await userId.save();
 
         response.status(201).json(savedPost)
     }catch(e) {
@@ -52,7 +65,7 @@ const editPost = async (request, response, next) => {
         
         response.status(200).json(updatedPost);
     }catch(e) {
-        next(e)
+        next(e);
     }
 }
 
@@ -64,8 +77,8 @@ const deletePost = async (request, response, next) => {
 
         response.status(200).send('Post has been sucessfully deleted');
     }catch(e) {
-        next(e)
+        next(e);
     }
 }
 
-module.exports = { getPosts, newPost, getPost, deletePost, editPost }
+module.exports = { getPosts, newPost, getPost, deletePost, editPost };

@@ -1,8 +1,11 @@
-const Comments = require('../models/comments.js');
+const Comment = require('../models/comments.js');
+const Post = require('../models/posts.js');
+const User = require('../models/users.js')
+const { createError } = require('../services/createError.js');
 
 const getComments = async (request, response, next) => {
     try {
-        const comments = await Comments.find({})
+        const comments = await Comment.find({}).populate('user', { username: 1, profile: 1 }).populate('post', { comments: 0 });
 
         response.status(200).json(comments)
     }catch(e){
@@ -13,17 +16,33 @@ const getComments = async (request, response, next) => {
 const newComment = async (request, response, next) => {
     const { content, likes, dislikes, post, user } = request.body;
 
-    try {
+    const postId = await Post.findById(post);
+    const userId = await User.findById(user)
 
-        const comment = new Comment({
-            content,
-            likes,
-            dislikes,
-            post,
-            user
-        })
+    const comment = new Comment({
+        content,
+        likes,
+        dislikes,
+        post: postId._id,
+        user: userId._id
+    })
+
+    if(!content) {
+        return next(createError(204, 'No content'));
+    }else if(!postId || !userId) {
+        return next(createError(404, 'Not found'));
+    }
+
+    try {  
 
         const savedComment = await comment.save();
+        postId.comments = postId.comments.concat(savedComment._id);
+        userId.comments = userId.comments.concat(savedComment._id);
+
+        await postId.save();
+        await userId.save();
+
+        
 
         response.status(201).json(savedComment)
     }catch(e) {
