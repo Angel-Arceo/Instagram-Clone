@@ -1,10 +1,10 @@
-const User = require('../models/users.js');
+const User = require('../models/user.js');
 const { createError } = require('../services/createError.js');
 const bcrypt = require('bcrypt');
 
 const getUsers = async (request, response, next) => {
     try {
-        const users = await User.find({}).populate('posts',  { user: 0 }).populate('comments', { user: 0 })
+        const users = await User.find({}).populate('posts',  { user: 0 }).populate('comments', { user: 0 }).populate('follow')
 
         response.status(200).json(users);
     }catch(e) {
@@ -29,7 +29,7 @@ const getUser = async (request, response, next) => {
 }
 
 const register = async (request, response, next) => {
-    const { profile, username, name, password, followers, following, posts, comments } = request.body;
+    const { profile, username, name, password, follow, posts, comments } = request.body;
 
     const newPassword = bcrypt.hashSync(password, 10)
 
@@ -42,8 +42,7 @@ const register = async (request, response, next) => {
         username, 
         name, 
         password: newPassword, 
-        followers, 
-        following, 
+        follow, 
         posts,
         comments
     })

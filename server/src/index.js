@@ -7,6 +7,8 @@ const { connect } = require('./services/dbConnect.js');
 const userRoute = require('./routes/users.js');
 const postRoute = require('./routes/posts.js');
 const commentsRoute = require('./routes/comments.js');
+const followerRoute = require('./routes/followers.js');
+const followingRoute = require('./routes/following.js');
 
 
 const app = express();
@@ -19,7 +21,8 @@ app.use(cors());
 app.use('/api/users', userRoute);
 app.use('/api/posts', postRoute);
 app.use('/api/comments', commentsRoute);
-
+app.use('/api/followers', followerRoute);
+app.use('/api/following', followingRoute);
 
 //to handle errors
 app.use((err, req, res, next) => {

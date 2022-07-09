@@ -18,18 +18,24 @@ const UserSchema = new Schema({
         type: String,
         required: true
     },
-    followers: Number,
-    following: Number,
+    follow: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Follower'
+        },
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Following'
+        }
+    ],
     posts: [{
         type: Schema.Types.ObjectId,
         ref: 'Post'
     }],
-    comments: [
-        {
+    comments: [{
             type: Schema.Types.ObjectId,
             ref: 'Comment'
-        }
-    ]
+    }]
 })
 
 const User = model('User', UserSchema)

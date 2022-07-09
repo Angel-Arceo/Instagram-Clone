@@ -1,5 +1,5 @@
-const Post = require('../models/posts.js');
-const User = require('../models/users.js')
+const Post = require('../models/post.js');
+const User = require('../models/user.js')
 const { createError } = require('../services/createError.js');
 
 const getPosts = async (request, response, next) => {

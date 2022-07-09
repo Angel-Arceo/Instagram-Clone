@@ -1,6 +1,6 @@
-const Comment = require('../models/comments.js');
-const Post = require('../models/posts.js');
-const User = require('../models/users.js')
+const Comment = require('../models/comment.js');
+const Post = require('../models/post.js');
+const User = require('../models/user.js')
 const { createError } = require('../services/createError.js');
 
 const getComments = async (request, response, next) => {
