@@ -15,6 +15,10 @@ const getUsers = async (request, response, next) => {
 const getUser = async (request, response, next) => {
     const userId = request.params.id
 
+    if(!userId) {
+        return next(createError(204, 'No userId'))
+    }
+
     try {
         const user = await User.findById(userId).populate('posts', {
             user: 0,
@@ -25,35 +29,6 @@ const getUser = async (request, response, next) => {
         response.status(200).json(user)
     }catch(e) {
         next(e)
-    }
-}
-
-const register = async (request, response, next) => {
-    const { profile, username, name, password, follow, posts, comments } = request.body;
-
-    const newPassword = bcrypt.hashSync(password, 10)
-
-    if(!username) {
-        return next(createError(400, 'No username'));
-    }
-
-    const user = new User({
-        profile, 
-        username, 
-        name, 
-        password: newPassword, 
-        follow, 
-        posts,
-        comments
-    })
-
-    try {
-
-        const savedUser = await user.save();
-
-        response.status(201).json(savedUser)
-    }catch(e) {
-        next(e);
     }
 }
 
@@ -69,4 +44,4 @@ const deleteUser = async (request, response, next) => {
     }
 }
 
-module.exports = { getUsers, getUser, register, deleteUser }
+module.exports = { getUsers, getUser, deleteUser }

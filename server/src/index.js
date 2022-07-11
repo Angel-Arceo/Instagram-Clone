@@ -9,7 +9,7 @@ const postRoute = require('./routes/posts.js');
 const commentsRoute = require('./routes/comments.js');
 const followerRoute = require('./routes/followers.js');
 const followingRoute = require('./routes/following.js');
-
+const authRoute = require('./routes/auth.js');
 
 const app = express();
 dotenv.config()
@@ -23,6 +23,7 @@ app.use('/api/posts', postRoute);
 app.use('/api/comments', commentsRoute);
 app.use('/api/followers', followerRoute);
 app.use('/api/following', followingRoute);
+app.use('/api/auth/', authRoute);
 
 //to handle errors
 app.use((err, req, res, next) => {

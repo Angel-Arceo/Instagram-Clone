@@ -1,6 +1,5 @@
 Todo
 
--follow function
 -adding jwt to authentication
 -upload files to my db post
 
