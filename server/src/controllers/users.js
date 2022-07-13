@@ -33,7 +33,7 @@ const getUser = async (request, response, next) => {
 }
 
 const deleteUser = async (request, response, next) => {
-    const userId = request.params.id;
+    const userId = request.id;
 
     try {
         await User.findByIdAndDelete(userId);

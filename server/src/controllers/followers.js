@@ -13,7 +13,7 @@ const getFollowers = async (request, response, next) => {
 }
 
 const newFollower = async (request, response, next) => {
-    const { follower } = request.body;
+    const { follower } = request.body; //receives the user to which it belongs
 
     const newFollower = new Follower({
         follower
@@ -30,7 +30,7 @@ const newFollower = async (request, response, next) => {
 }
 
 const addFollower = async (request, response, next) => {
-    const userId = await User.findById(request.params.id);
+    const userId = await User.findById(request.id);
 
     if(!userId) {
         return next(createError(404, 'User not found.'))

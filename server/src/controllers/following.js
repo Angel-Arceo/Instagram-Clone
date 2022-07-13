@@ -31,7 +31,7 @@ const newFollow = async (request, response, next) => {
 }
 
 const addFollow = async (request, response, next) => {
-    const userId = await User.findById(request.params.id);
+    const userId = await User.findById(request.id);
     
     if(!userId) {
         return next(createError(404, 'User not found.'))

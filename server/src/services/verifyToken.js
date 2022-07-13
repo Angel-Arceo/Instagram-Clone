@@ -12,7 +12,7 @@ const getTokenFrom = request => {
     return null
 }
 
-const verifyToken = (request, next) => {
+const verifyToken = (request, response, next) => {
     const token = getTokenFrom(request);
     const decodedToken = jwt.verify(token, process.env.SECRET);
 
@@ -20,7 +20,9 @@ const verifyToken = (request, next) => {
         return next(createError(401, 'token missing or invalid'));
     }
 
-    return decodedToken.id
+    request.id = decodedToken.id
+
+    next();
 }
 
 module.exports = { verifyToken };

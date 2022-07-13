@@ -25,11 +25,11 @@ const getPost = async (request, response, next) => {
 }
 
 const newPost = async (request, response, next) => {
-    const { photo, title, content, likes, user, comments } = request.body;
+    const { photo, title, content, likes, comments } = request.body;
 
-    const userId = await User.findById(user)
+    const user = await User.findById(request.id);
 
-    if(!userId) {
+    if(!user) {
         return next(createError(404, 'User not found'));
     }else if(!content) {
         return next(createError(204, 'No content'))
@@ -40,7 +40,7 @@ const newPost = async (request, response, next) => {
         title,
         content, 
         likes,
-        user: userId._id,
+        user: user._id,
         comments
     })
 
@@ -48,8 +48,8 @@ const newPost = async (request, response, next) => {
 
         const savedPost = await post.save();
 
-        userId.posts = userId.posts.concat(savedPost._id);
-        await userId.save();
+        user.posts = user.posts.concat(savedPost._id);
+        await user.save();
 
         response.status(201).json(savedPost)
     }catch(e) {

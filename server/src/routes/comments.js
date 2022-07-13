@@ -1,10 +1,11 @@
 const express = require('express')
 const { getComments, newComment, deleteComment, editComment } = require('../controllers/comments.js')
+const { verifyToken } = require('../services/verifyToken.js');
 const router = express.Router();
 
 router.get('/', getComments);
-router.post('/', newComment);
-router.put('/:id', editComment)
-router.delete('/:id', deleteComment);
+router.post('/', verifyToken, newComment);
+router.put('/:id', verifyToken, editComment);
+router.delete('/:id', verifyToken, deleteComment);
 
 module.exports = router

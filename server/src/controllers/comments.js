@@ -14,10 +14,10 @@ const getComments = async (request, response, next) => {
 }
 
 const newComment = async (request, response, next) => {
-    const { content, likes, dislikes, post, user } = request.body;
+    const { content, likes, dislikes, post } = request.body;
 
     const postId = await Post.findById(post);
-    const userId = await User.findById(user)
+    const userId = await User.findById(request.id);
 
     const comment = new Comment({
         content,
