@@ -1,6 +1,7 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
+const fileUpload = require('express-fileupload');
 const { connect } = require('./services/dbConnect.js');
 
 //routes
@@ -15,6 +16,7 @@ const app = express();
 dotenv.config()
 
 //middleware
+app.use(fileUpload());
 app.use(express.json());
 app.use(cors());
 

@@ -25,7 +25,7 @@ const getPost = async (request, response, next) => {
 }
 
 const newPost = async (request, response, next) => {
-    const { photo, title, content, likes, comments } = request.body;
+    const { title, content, likes, comments } = request.body;
 
     const user = await User.findById(request.id);
 
@@ -36,7 +36,7 @@ const newPost = async (request, response, next) => {
     }
 
     const post = new Post({
-        photo,
+        photo: request.files.photo.md5,
         title,
         content, 
         likes,

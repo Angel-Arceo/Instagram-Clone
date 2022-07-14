@@ -6,16 +6,16 @@ require('dotenv').config();
 
 
 const register = async (request, response, next) => {
-    const { profile, username, name, password, follow, posts, comments } = request.body;
-
-    const newPassword = bcrypt.hashSync(password, 10)
+    const { username, name, password, follow, posts, comments } = request.body;
+    
+    const newPassword = bcrypt.hashSync(password, 10);
 
     if(!username) {
         return next(createError(400, 'No username'));
     }
 
     const user = new User({
-        profile, 
+        profile: request.files.profile.md5,
         username, 
         name, 
         password: newPassword, 
