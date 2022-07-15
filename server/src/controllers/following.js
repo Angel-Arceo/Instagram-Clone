@@ -1,69 +1,38 @@
-const Following = require('../models/following.js');
 const User = require('../models/user.js');
-const { createError } = require('../services/createError.js');
 
-
-const getFollows = async (request, response, next) => {
-    try {
-        const following = await Following.find({}).populate('following')
-
-        response.status(200).json(following);
-    }catch(e) {
-        next(e);
-    }
-}
-
-const newFollow = async (request, response, next) => {
-    const { following } = request.body;
-
-    const newFollow = new Following({
-        following
-    });
-
-    try {
-
-        const savedFollow = await newFollow.save();
-
-        response.status(201).json(savedFollow)
-    }catch(e) {
-        next(e);
-    }
-}
-
-const addFollow = async (request, response, next) => {
-    const userId = await User.findById(request.id);
+const addFollowing = async (request, response, next) => {
+    const { userId } = request.body
     
-    if(!userId) {
-        return next(createError(404, 'User not found.'))
-    }
-
-    const { user } = request.body
+    const user = await User.findById(request.id);
 
     try {
-        const follow = await Following.findById(userId.follow[1])
+        const newUser = user.following.concat(userId)
+        user.following = newUser;
 
-        const newFollow = follow.following.concat(user);
-        follow.following = newFollow
+        await user.save();
 
-        await follow.save();
-
-        response.status(201).send('Follow has been added!.');
-
+        response.status(201).json(user);
     }catch(err) {
         next(err);
     }
 }
 
-const deleteFollow = async (request, response, next) => {
-    const followId = request.params.id;
+const deleteFollowing = async (request, response, next) => {
+    const user = await User.findById(request.id);
+
+    const follow = user.following.findIndex(user => user._id == request.params.id)
 
     try {
-        await Following.findByIdAndDelete(followId);
+        user.following.splice(1, follow)
 
-        response.status(200).send('Follow has been sucessfully deleted');
-    }catch(e) {
-        next(e);
+        user.following = [...user.following]
+
+        await user.save();
+
+        response.status(200).send('User has beeen deleted.');
+    }catch(err) {
+        next(err);
     }
 }
 
-module.exports = { getFollows, addFollow, newFollow, deleteFollow };
+module.exports = { addFollowing, deleteFollowing };

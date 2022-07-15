@@ -20,11 +20,11 @@ app.use(fileUpload());
 app.use(express.json());
 app.use(cors());
 
-app.use('/api/users', userRoute);
-app.use('/api/posts', postRoute);
-app.use('/api/comments', commentsRoute);
-app.use('/api/followers', followerRoute);
-app.use('/api/following', followingRoute);
+app.use('/api/users/', userRoute);
+app.use('/api/posts/', postRoute);
+app.use('/api/comments/', commentsRoute);
+app.use('/api/followers/', followerRoute);
+app.use('/api/following/', followingRoute);
 app.use('/api/auth/', authRoute);
 
 //to handle errors

@@ -6,7 +6,7 @@ require('dotenv').config();
 
 
 const register = async (request, response, next) => {
-    const { username, name, password, follow, posts, comments } = request.body;
+    const { username, name, password, followers, following, posts, comments } = request.body;
     
     const newPassword = bcrypt.hashSync(password, 10);
 
@@ -19,7 +19,8 @@ const register = async (request, response, next) => {
         username, 
         name, 
         password: newPassword, 
-        follow, 
+        followers,
+        following, 
         posts,
         comments
     })

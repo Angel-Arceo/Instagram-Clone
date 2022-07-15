@@ -18,23 +18,21 @@ const UserSchema = new Schema({
         type: String,
         required: true
     },
-    follow: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: 'Follower'
-        },
-        {
-            type: Schema.Types.ObjectId,
-            ref: 'Following'
-        }
-    ],
+    followers: [{
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    }],
+    following: [{
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    }],
     posts: [{
         type: Schema.Types.ObjectId,
         ref: 'Post'
     }],
     comments: [{
-            type: Schema.Types.ObjectId,
-            ref: 'Comment'
+        type: Schema.Types.ObjectId,
+        ref: 'Comment'
     }]
 })
 

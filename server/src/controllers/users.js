@@ -4,7 +4,12 @@ const bcrypt = require('bcrypt');
 
 const getUsers = async (request, response, next) => {
     try {
-        const users = await User.find({}).populate('posts',  { user: 0 }).populate('comments', { user: 0 }).populate('follow')
+        const users = await User.find({}).populate('posts',  {
+            user: 0 
+        }).populate('comments', { 
+            user: 0 
+        }).populate('followers')
+        .populate('following')
 
         response.status(200).json(users);
     }catch(e) {
@@ -24,7 +29,7 @@ const getUser = async (request, response, next) => {
             user: 0,
         }).populate('comments', {
             user: 0,
-        });
+        }).populate('followers').populate('following');
 
         response.status(200).json(user)
     }catch(e) {
@@ -33,7 +38,7 @@ const getUser = async (request, response, next) => {
 }
 
 const deleteUser = async (request, response, next) => {
-    const userId = request.id;
+    const userId = request.params.id;
 
     try {
         await User.findByIdAndDelete(userId);
