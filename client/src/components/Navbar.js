@@ -18,7 +18,7 @@ const Navbar = () => {
                             <Icon name="home" fill="#262626" width="23" height="23" />
                         </Link>
                     </li>
-                    <li>
+                    <li className="visible sm:hidden sm:invisible">
                         <Link to="/">
                             <Icon name="search" width="26" height="26" strokeWidth="1.3" />
                         </Link>
