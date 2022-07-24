@@ -25,6 +25,11 @@ const Navbar = () => {
                     </li>
                     <li>
                         <Link to="/">
+                            <Icon name="post" width="27" height="27" strokeWidth="1.5" />
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/">
                             <Icon name="add" width="23" height="23" />
                         </Link>
                     </li>
