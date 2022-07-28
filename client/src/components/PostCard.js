@@ -1,11 +1,16 @@
 import React from 'react';
+import FooterPost from './FooterPost';
 import HeaderPost from './HeaderPost';
 
-const PostCard = () => {
+const PostCard = ({photo}) => {
     return (
-        <div className="w-full sm:w-[470px] min-h-[300px] mb-4 overflow-hidden border-solid border-1 border-gray rounded-md">
+        <article className="flex flex-col w-full sm:w-[470px] min-h-[300px] mb-4 overflow-hidden border-solid border-1 border-gray rounded-md">
             <HeaderPost image="https://avatars.githubusercontent.com/u/73148751?v=4" userName="Angel Arceo" />
-        </div>
+            <div className="pb-4">
+                <img className="w-auto" src={photo} alt="photo" />
+            </div>
+            <FooterPost likes="284,123" />
+        </article>
     )
 }
 

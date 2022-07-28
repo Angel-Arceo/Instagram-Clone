@@ -13,7 +13,8 @@ module.exports = {
     extend: {
       colors: {
         'gray': '#dadce0',
-        'gray-secondary': '#efefef'
+        'secondary-gray': '#efefef',
+        'tertiary-gray': '#737373'
       },
       spacing: {
         '100': '1000px',

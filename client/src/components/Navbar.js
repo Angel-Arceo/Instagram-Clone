@@ -9,7 +9,7 @@ const Navbar = () => {
     }
 
     return (
-        <nav className="flex flex-row items-center justify-center gap-4 sticky top-0 left-0 w-full h-[55px] border-solid border-b-1 border-gray">
+        <nav className="flex flex-row items-center justify-center gap-4 sticky bg-white top-0 left-0 w-full h-[55px] border-solid border-b-1 border-gray">
             <div className="flex flex-row justify-between">
                 <h1 className="flex font-lobster text-2xl mr-8">Instagram</h1>
                 <span className="hidden sm:flex invisible sm:visible">
