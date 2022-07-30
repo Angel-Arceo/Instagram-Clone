@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import PostCard from './PostCard';
+import PostCard from './post/PostCard';
 
 const Posts = () => {
     const [ posts, setPost ] = useState([{
@@ -24,7 +24,7 @@ const Posts = () => {
     }])
 
     return (
-        <section className="flex justify-center mt-12">
+        <section className="flex justify-center mt-px">
             <div className="flex flex-col">
                 {
                     posts.map(post => <PostCard key={post._id} postObj={post} />)
